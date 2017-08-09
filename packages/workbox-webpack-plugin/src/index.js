@@ -1,6 +1,7 @@
 const GenerateFileManifestPlugin = require('./lib/generate-file-manifest');
 const GenerateSWPlugin = require('./lib/generate-sw');
 const InjectManifestPlugin = require('./lib/inject-manifest');
+const PrependManifestPlugin = require('./lib/prepend-manifest');
 
 /**
  * Use one of the plugins to integrate a webpack project with
@@ -35,4 +36,5 @@ module.exports = {
   GenerateSWPlugin,
   GenerateFileManifestPlugin,
   InjectManifestPlugin,
+  PrependManifestPlugin,
 };

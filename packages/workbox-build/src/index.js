@@ -4,6 +4,7 @@ const generateSW = require('./lib/generate-sw');
 const getFileManifestEntries = require('./lib/get-file-manifest-entries');
 const generateFileManifest = require('./lib/generate-file-manifest');
 const injectManifest = require('./lib/inject-manifest');
+const prependManifest = require('./lib/prepend-manifest');
 
 /**
  * # workbox-build
@@ -88,4 +89,5 @@ module.exports = {
   generateFileManifest,
   getFileManifestEntries,
   injectManifest,
+  prependManifest,
 };

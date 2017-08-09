@@ -2,6 +2,7 @@
 
 const getFileManifestEntries = require('./get-file-manifest-entries');
 const writeFileManifest = require('./utils/write-file-manifest');
+const isValidInput = require('./utils/is-valid-input');
 const errors = require('./errors');
 
 /**
@@ -65,7 +66,7 @@ const errors = require('./errors');
  * @memberof module:workbox-build
  */
 const generateFileManifest = (input) => {
-  if (!input || typeof input !== 'object' || Array.isArray(input)) {
+  if (!isValidInput(input)) {
     return Promise.reject(
       new Error(errors['invalid-generate-file-manifest-arg']));
   }

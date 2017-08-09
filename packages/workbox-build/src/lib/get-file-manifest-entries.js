@@ -5,6 +5,7 @@ const filterFiles = require('./utils/filter-files');
 const getCompositeDetails = require('./utils/get-composite-details');
 const getFileDetails = require('./utils/get-file-details');
 const getStringDetails = require('./utils/get-string-details');
+const isValidInput = require('./utils/is-valid-input');
 const constants = require('./constants');
 
 /**
@@ -55,7 +56,7 @@ const constants = require('./constants');
  * @memberof module:workbox-build
  */
 const getFileManifestEntries = (input) => {
-  if (!input || typeof input !== 'object' || Array.isArray(input)) {
+  if (!isValidInput(input)) {
     return Promise.reject(
       new Error(errors['invalid-get-manifest-entries-input']));
   }

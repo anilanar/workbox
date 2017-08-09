@@ -23,6 +23,7 @@ describe(`Tests for webpack plugin`, function() {
       injectManifest: function() {},
       generateSW: function() {},
       generateFileManifest: function() {},
+      prependManifest: function() {},
     };
 
     sinon.stub(proxySwBuild, 'generateSW').callsFake(function() {
@@ -38,6 +39,12 @@ describe(`Tests for webpack plugin`, function() {
     });
 
     sinon.stub(proxySwBuild, 'generateFileManifest').callsFake(function() {
+      return new Promise((resolve) => {
+        resolve();
+      });
+    });
+
+    sinon.stub(proxySwBuild, 'prependManifest').callsFake(function() {
       return new Promise((resolve) => {
         resolve();
       });
@@ -298,6 +305,74 @@ describe(`Tests for webpack plugin`, function() {
       assert.isTrue(proxySwBuild.injectManifest.calledOnce);
       assert.deepEqual(
         proxySwBuild.injectManifest.getCall(0).args,
+        [Object.assign({
+          globDirectory: OUTPUT_DIR,
+          globPatterns: DEFAULT_GLOB_PATTERNS,
+          swDest: `${OUTPUT_DIR}/sw.js`,
+        }, userConfig)],
+      );
+    });
+  });
+  describe('PrependManifestPlugin', () => {
+    let PrependManifestPlugin;
+
+    beforeEach(function() {
+      // do a proxy require
+      PrependManifestPlugin = proxyquire(
+        '../../src/lib/prepend-manifest',
+        {
+          'workbox-build': proxySwBuild,
+        }
+      );
+    });
+
+    it(`should throw if config.swSrc is falsy`, () => {
+      assert.throws(() => new PrependManifestPlugin({}).getConfig(webpackCompilation));
+    });
+
+    it(`should keep user-given value for config.swSrc `, () => {
+      const plugin = new PrependManifestPlugin({
+        swSrc: 'foo.js',
+      });
+      assert.equal(
+        plugin.getConfig(webpackCompilation).swSrc,
+        'foo.js',
+      );
+    });
+
+    it(`should assign the default value for config.swDest`, () => {
+      const plugin = new PrependManifestPlugin({
+        swSrc: 'foo.js',
+      });
+      assert.equal(
+        plugin.getConfig(webpackCompilation).swDest,
+        `${OUTPUT_DIR}/sw.js`
+      );
+    });
+
+    it(`should keep user-given value for config.swDest `, () => {
+      const plugin = new PrependManifestPlugin({
+        swSrc: 'foo.js',
+        swDest: 'bar.js',
+      });
+      assert.equal(
+        plugin.getConfig(webpackCompilation).swDest,
+        'bar.js',
+      );
+    });
+
+    it(`should call prependManifest with proper config`, () => {
+      const userConfig = {
+        swSrc: 'foo.js',
+        modifyUrlPrefix: 'bar',
+      };
+      const plugin = new PrependManifestPlugin(userConfig);
+      plugin.apply(webpackCompilation.compiler);
+      webpackEventCallback(webpackCompilation, webpackDoneCallback);
+
+      assert.isTrue(proxySwBuild.prependManifest.calledOnce);
+      assert.deepEqual(
+        proxySwBuild.prependManifest.getCall(0).args,
         [Object.assign({
           globDirectory: OUTPUT_DIR,
           globPatterns: DEFAULT_GLOB_PATTERNS,

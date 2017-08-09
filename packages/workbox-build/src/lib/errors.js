@@ -61,6 +61,8 @@ module.exports = {
     `an object with string key value pairs.`,
   'invalid-inject-manifest-arg': `The input to 'injectManifest()' must be ` +
     `be an object.`,
+  'invalid-prepend-manifest-arg': `The input to 'prependManifest()' must be ` +
+    `be an object.`,
   'injection-point-not-found': `Unable to find a place to inject the ` +
     `manifest. Please ensure that you have 'workboxSW.precache([])' ` +
     `somewhere in your service worker file.`,

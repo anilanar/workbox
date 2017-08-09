@@ -2,6 +2,7 @@
 
 const path = require('path');
 const copyWorkboxSW = require('./utils/copy-workbox-sw');
+const isValidInput = require('./utils/is-valid-input');
 const getFileManifestEntries = require('./get-file-manifest-entries');
 const writeServiceWorker = require('./write-sw');
 const errors = require('./errors');
@@ -99,7 +100,7 @@ const constants = require('./constants');
  * @memberof module:workbox-build
  */
 const generateSW = function(input) {
-  if (!input || typeof input !== 'object' || Array.isArray(input)) {
+  if (!isValidInput(input)) {
     return Promise.reject(new Error(errors['invalid-generate-sw-input']));
   }
 
