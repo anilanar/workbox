@@ -1,5 +1,5 @@
 {
-  "name": "workbox-build",
+  "name": "@anilanar/workbox-build",
   "version": "1.2.0",
   "description": "A module that integrates into your build process, helping you generate a manifest of local files that workbox-sw should precache.",
   "keywords": [
@@ -20,6 +20,9 @@
   ],
   "engines": {
     "node": ">=4.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "author": "Google's Web DevRel Team",
   "license": "Apache-2.0",
