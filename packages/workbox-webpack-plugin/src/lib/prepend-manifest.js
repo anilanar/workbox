@@ -1,4 +1,4 @@
-const swBuild = require('workbox-build');
+const swBuild = require('@anilanar/workbox-build');
 const path = require('path');
 const BasePlugin = require('./base-plugin');
 const errors = require('./errors');
