@@ -152,7 +152,7 @@ describe(`Tests for webpack plugin`, function() {
     beforeEach(function() {
       // do a proxy require
       GenerateSWPlugin = proxyquire('../../src/lib/generate-sw', {
-        'workbox-build': proxySwBuild,
+        '@anilanar/workbox-build': proxySwBuild,
       });
     });
 
@@ -202,7 +202,7 @@ describe(`Tests for webpack plugin`, function() {
       GenerateFileManifestPlugin = proxyquire(
         '../../src/lib/generate-file-manifest',
         {
-          'workbox-build': proxySwBuild,
+          '@anilanar/workbox-build': proxySwBuild,
         }
       );
     });
@@ -253,7 +253,7 @@ describe(`Tests for webpack plugin`, function() {
       InjectManifestPlugin = proxyquire(
         '../../src/lib/inject-manifest',
         {
-          'workbox-build': proxySwBuild,
+          '@anilanar/workbox-build': proxySwBuild,
         }
       );
     });
@@ -321,7 +321,7 @@ describe(`Tests for webpack plugin`, function() {
       PrependManifestPlugin = proxyquire(
         '../../src/lib/prepend-manifest',
         {
-          'workbox-build': proxySwBuild,
+          '@anilanar/workbox-build': proxySwBuild,
         }
       );
     });
